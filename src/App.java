@@ -100,6 +100,10 @@ public class App extends JFrame {
     public void paint(Graphics g2) {
         Graphics2D g = (Graphics2D) g2;
 
+        //White Background
+        g.setColor(Color.WHITE);
+        g.fillRect(0, 0, getWidth(), getHeight());
+
         //Draw Truck
         g.drawImage(img, truckX, truckY, null);
         
