@@ -1,12 +1,26 @@
 package src;
+
 import java.awt.event.*;
 import javax.swing.*;
+import src.data.Pipe;
+
 
 public class Editor extends JFrame {
     
     public void open(Pipe p) {
-        initzalizeWindow(p);
 
+        ///Create Window
+        setLayout(null);
+
+        setTitle("Stange: " + p.id);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setSize(250, 300);
+        setLocationRelativeTo(null);
+
+        setVisible(true);
+
+
+        
         createLabel("Stange ID: " + p.id, 32, 10);
 
         ///Legierung
@@ -23,8 +37,11 @@ public class Editor extends JFrame {
                 String legierung = area0.getText();
                 String charge = area1.getText();
 
-                p.legierung = Float.parseFloat(legierung);
+                p.legierung = legierung;
                 p.charge = Float.parseFloat(charge);
+
+                ///Apply on DB
+                Main.database.updatePipe(p.id, p.charge, p.legierung);
 
                 dispose();
             }
@@ -39,21 +56,6 @@ public class Editor extends JFrame {
                 dispose();
             }
         });
-    }
-
-    /**
-     * Creates Window for changing values
-     * @param p Stange (Pipe)
-     */
-    void initzalizeWindow(Pipe p) {
-        setLayout(null);
-
-        setTitle("Stange: " + p.id);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setSize(250, 300);
-        setLocationRelativeTo(null);
-
-        setVisible(true);
     }
 
     /**

@@ -1,24 +1,25 @@
 package src;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-
+import src.data.Pipe;
 
 public class App extends JFrame {
 
     ///Pipes
-    ArrayList<Pipe> pipes = new ArrayList<Pipe>();
+    public static ArrayList<Pipe> pipes = new ArrayList<Pipe>();
 
-    int amount = 25; //Total Amount of Pipes
-    int maxAmountPerRack = 8; ///Totals Amount of Pipes per Runge
+    int amount = 30; //Total Amount of Pipes
+    int maxAmountPerRack = 5; ///Totals Amount of Pipes per Runge
     int size = 32; ///Pipe Radius
 
     ///Runge
-    int rungeWidth = 8; //Balken
+    int rackWidth = 8; //Balken
     int posX = 132;
-    int posY;
+    int posY = 0;
 
     ///Truck
     BufferedImage img;
@@ -41,10 +42,14 @@ public class App extends JFrame {
         initApp();
     }
 
+    /**
+     * After Window created, initialize settings(img, pos, list etc.)
+     */
     void initApp() {
 
         ///Get Img
         img = Main.truckImg;
+
 
         ///Get Size
         int wWidth = getWidth();
@@ -97,6 +102,9 @@ public class App extends JFrame {
         });
     }
 
+    /**
+     * Draws graphics on screen
+     */
     public void paint(Graphics g2) {
         Graphics2D g = (Graphics2D) g2;
 
@@ -128,11 +136,11 @@ public class App extends JFrame {
 
         ///Draw Supporters between runges
         for (int i = 0; i < getSpace; i++) {
-            int startX = posX - rungeWidth;
+            int startX = posX - rackWidth;
 
-            int dx = startX + (i * size) + (i * rungeWidth);
+            int dx = startX + (i * size) + (i * rackWidth);
 
-            g.fillRect(dx, posY, rungeWidth, maxAmountPerRack * size);
+            g.fillRect(dx, posY, rackWidth, maxAmountPerRack * size);
         }
     }
 
@@ -164,7 +172,7 @@ public class App extends JFrame {
             }
 
             ///Update Position of Pipes
-            dx += (dem * (size + rungeWidth));
+            dx += (dem * (size + rackWidth));
             dy = y + (temp_i * size);
 
 
@@ -173,20 +181,11 @@ public class App extends JFrame {
             p.x = dx;
             p.y = dy;
             p.size = size;
-            p.id = i;
+            p.id = i + 1;
 
             pipes.add(p);
         }
 
         return pipes;
     }
-}
-
-class Pipe {
-    public int x;
-    public int y;
-    public int size;
-    public int id;
-    public Float legierung = .0f;
-    public Float charge = .0f;
 }
